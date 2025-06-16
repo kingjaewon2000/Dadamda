@@ -1,11 +1,11 @@
-package com.example.dadamda
+package com.example.worker
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DadamdaApplication
+class WorkerApplication
 
 fun main(args: Array<String>) {
-    runApplication<DadamdaApplication>(*args)
+    runApplication<WorkerApplication>(*args)
 }

@@ -1,14 +1,10 @@
 package com.example.apiserver.domain.entity
 
+import com.example.core.global.entity.BaseTimeEntity
 import jakarta.persistence.*
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.time.LocalDateTime
 
 @Table
 @Entity
-@EntityListeners(AuditingEntityListener::class)
 class Product(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L,
@@ -21,7 +17,7 @@ class Product(
 
     price: Int,
     stockQuantity: Int
-) {
+) : BaseTimeEntity() {
 
     init {
         require(price > 0) { "상품 가격은 0보다 커야 합니다." }
@@ -35,14 +31,5 @@ class Product(
     @Column(nullable = false)
     var stockQuantity: Int = stockQuantity
         private set
-
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
-    lateinit var createdAt: LocalDateTime
-        private set
-
-    @Column(nullable = false)
-    @LastModifiedDate
-    lateinit var updatedAt: LocalDateTime
 
 }

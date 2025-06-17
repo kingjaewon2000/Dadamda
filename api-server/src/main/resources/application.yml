@@ -1,5 +1,16 @@
 spring:
   application:
     name: api-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/dadamda?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 server:
   port: 8080

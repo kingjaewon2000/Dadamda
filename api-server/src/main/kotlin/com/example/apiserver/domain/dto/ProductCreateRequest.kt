@@ -6,7 +6,7 @@ data class ProductCreateRequest(
     val name: String,
     val description: String,
     val price: Int,
-    val stock: Int
+    val stockQuantity: Int
 ) {
 
     fun toEntity(): Product {
@@ -14,7 +14,7 @@ data class ProductCreateRequest(
             name = name,
             description = description,
             price = price,
-            stock = stock
+            stockQuantity = stockQuantity
         )
     }
 

@@ -19,12 +19,22 @@ class Product(
     @Column
     val description: String,
 
-    @Column
-    val price: Int,
-
-    @Column
-    val stock: Int
+    price: Int,
+    stockQuantity: Int
 ) {
+
+    init {
+        require(price > 0) { "상품 가격은 0보다 커야 합니다." }
+        require(stockQuantity >= 0) { "상품 재고는 0 이상이어야 합니다." }
+    }
+
+    @Column(nullable = false)
+    var price: Int = price
+        private set
+
+    @Column(nullable = false)
+    var stockQuantity: Int = stockQuantity
+        private set
 
     @Column(nullable = false, updatable = false)
     @CreatedDate

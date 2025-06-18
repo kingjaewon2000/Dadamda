@@ -12,9 +12,6 @@ class Product(
     @Column(nullable = false)
     var name: String,
 
-    @Column
-    val description: String,
-
     price: Int,
     stockQuantity: Int
 ) : BaseTimeEntity() {

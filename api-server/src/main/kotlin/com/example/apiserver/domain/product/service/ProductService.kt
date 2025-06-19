@@ -1,7 +1,7 @@
-package com.example.apiserver.domain.service
+package com.example.apiserver.domain.product.service
 
-import com.example.apiserver.domain.dto.*
-import com.example.apiserver.domain.repository.ProductRepository
+import com.example.apiserver.domain.product.dto.*
+import com.example.apiserver.domain.product.repository.ProductRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

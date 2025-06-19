@@ -1,7 +1,7 @@
-package com.example.apiserver.domain.controller
+package com.example.apiserver.domain.product.controller
 
-import com.example.apiserver.domain.dto.*
-import com.example.apiserver.domain.service.ProductService
+import com.example.apiserver.domain.product.dto.*
+import com.example.apiserver.domain.product.service.ProductService
 import org.springframework.web.bind.annotation.*
 
 @RestController

@@ -1,6 +1,6 @@
-package com.example.apiserver.domain.dto
+package com.example.apiserver.domain.product.dto
 
-import com.example.apiserver.domain.entity.Product
+import com.example.apiserver.domain.product.entity.Product
 
 data class ProductResponse(
     val productId: Long,

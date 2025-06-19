@@ -1,6 +1,6 @@
-package com.example.apiserver.domain.repository
+package com.example.apiserver.domain.product.repository
 
-import com.example.apiserver.domain.entity.Product
+import com.example.apiserver.domain.product.entity.Product
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 

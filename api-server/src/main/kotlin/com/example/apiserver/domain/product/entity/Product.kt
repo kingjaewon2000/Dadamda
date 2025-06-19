@@ -1,4 +1,4 @@
-package com.example.apiserver.domain.entity
+package com.example.apiserver.domain.product.entity
 
 import com.example.core.global.entity.BaseTimeEntity
 import jakarta.persistence.*

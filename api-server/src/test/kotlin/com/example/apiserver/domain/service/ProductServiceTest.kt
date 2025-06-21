@@ -37,7 +37,7 @@ class ProductServiceTest {
         fun `상품 등록 성공`() {
             // given
             val product = Product(
-                id = 1L,
+                productId = 1L,
                 name = "상품 테스트",
                 price = 100,
                 stockQuantity = 10
@@ -55,7 +55,7 @@ class ProductServiceTest {
 
             // then
             assertThat(response).isNotNull()
-            assertThat(response.productId).isEqualTo(product.id)
+            assertThat(response.productId).isEqualTo(product.productId)
         }
 
         @Test
@@ -64,7 +64,7 @@ class ProductServiceTest {
             // given
             assertThatThrownBy {
                 Product(
-                    id = 1L,
+                    productId = 1L,
                     name = "가격이 0원인 상품",
                     price = 0,
                     stockQuantity = 10
@@ -80,7 +80,7 @@ class ProductServiceTest {
             // given
             assertThatThrownBy {
                 Product(
-                    id = 1L,
+                    productId = 1L,
                     name = "가격이 0원인 상품",
                     price = 100,
                     stockQuantity = -1
@@ -100,7 +100,7 @@ class ProductServiceTest {
         fun `첫 페이지 요청 다음 페이지 x`() {
             // given
             val product = Product(
-                id = 1L,
+                productId = 1L,
                 name = "상품 테스트",
                 price = 100,
                 stockQuantity = 10
@@ -128,7 +128,7 @@ class ProductServiceTest {
             val pageSize = 10
             val products = (1L..pageSize + 1).map {
                 Product(
-                    id = it,
+                    productId = it,
                     name = "상품 테스트 ${it + 1}",
                     price = 100,
                     stockQuantity = 10

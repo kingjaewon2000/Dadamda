@@ -11,7 +11,7 @@ data class ProductResponse(
     companion object {
         fun from(product: Product): ProductResponse {
             return ProductResponse(
-                productId = product.id,
+                productId = product.productId,
                 name = product.name,
                 price = product.price,
             )

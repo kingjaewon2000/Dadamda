@@ -22,7 +22,7 @@ class ProductService(
         val hasNext = products.size > pageSize
         val content = if (hasNext) products.subList(0, pageSize) else products
         val productResponses = content.map(ProductResponse::from)
-        val nextCursor = if (hasNext) Cursor(content.last().id) else null
+        val nextCursor = if (hasNext) Cursor(content.last().productId) else null
 
         return CursorPageResponse(
             content = productResponses,
@@ -33,9 +33,9 @@ class ProductService(
 
     @Transactional
     fun createProduct(request: ProductCreateRequest): ProductIdResponse {
-        val product = request.toEntity()
+        val product = productRepository.save(request.toEntity())
 
-        return ProductIdResponse.from(productRepository.save(product))
+        return ProductIdResponse(product.productId)
     }
 
 }

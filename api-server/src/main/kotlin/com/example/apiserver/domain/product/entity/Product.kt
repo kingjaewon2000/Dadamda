@@ -3,11 +3,11 @@ package com.example.apiserver.domain.product.entity
 import com.example.core.global.entity.BaseTimeEntity
 import jakarta.persistence.*
 
-@Table
 @Entity
+@Table(name = "products")
 class Product(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0L,
+    var productId: Long = 0L,
 
     @Column(nullable = false)
     var name: String,
@@ -28,5 +28,17 @@ class Product(
     @Column(nullable = false)
     var stockQuantity: Int = stockQuantity
         private set
+
+    fun decreaseStock(quantity: Int) {
+        if (quantity <= 0) {
+            throw IllegalArgumentException("상품의 수량이 0 이하일 수 없습니다.")
+        }
+
+        if (stockQuantity - quantity < 0) {
+            throw IllegalArgumentException("재고가 부족합니다.")
+        }
+
+        stockQuantity -= quantity
+    }
 
 }

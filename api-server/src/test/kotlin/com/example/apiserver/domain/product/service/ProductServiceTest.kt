@@ -1,4 +1,4 @@
-package com.example.apiserver.domain.service
+package com.example.apiserver.domain.product.service
 
 import com.example.apiserver.domain.product.dto.Cursor
 import com.example.apiserver.domain.product.dto.CursorPageResponse
@@ -6,7 +6,6 @@ import com.example.apiserver.domain.product.dto.ProductCreateRequest
 import com.example.apiserver.domain.product.dto.ProductResponse
 import com.example.apiserver.domain.product.entity.Product
 import com.example.apiserver.domain.product.repository.ProductRepository
-import com.example.apiserver.domain.product.service.ProductService
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -37,7 +36,7 @@ class ProductServiceTest {
         fun `상품 등록 성공`() {
             // given
             val product = Product(
-                id = 1L,
+                productId = 1L,
                 name = "상품 테스트",
                 price = 100,
                 stockQuantity = 10
@@ -55,16 +54,16 @@ class ProductServiceTest {
 
             // then
             assertThat(response).isNotNull()
-            assertThat(response.productId).isEqualTo(product.id)
+            assertThat(response.productId).isEqualTo(product.productId)
         }
 
         @Test
-        @DisplayName("상품 등록 실패 가격이 0원 이하라면")
-        fun `상품 등록 실패1`() {
+        @DisplayName("상품 등록 실패 가격이 0원 이하")
+        fun `상품 등록 실패 가격이 0원 이하`() {
             // given
             assertThatThrownBy {
                 Product(
-                    id = 1L,
+                    productId = 1L,
                     name = "가격이 0원인 상품",
                     price = 0,
                     stockQuantity = 10
@@ -75,12 +74,12 @@ class ProductServiceTest {
         }
 
         @Test
-        @DisplayName("상품 등록 실패 수량이 -1 이하라면")
-        fun `상품 등록 실패2`() {
+        @DisplayName("상품 등록 실패 상품 수량이 -1 이하")
+        fun `상품 등록 실패 상품 수량이 -1 이하`() {
             // given
             assertThatThrownBy {
                 Product(
-                    id = 1L,
+                    productId = 1L,
                     name = "가격이 0원인 상품",
                     price = 100,
                     stockQuantity = -1
@@ -100,7 +99,7 @@ class ProductServiceTest {
         fun `첫 페이지 요청 다음 페이지 x`() {
             // given
             val product = Product(
-                id = 1L,
+                productId = 1L,
                 name = "상품 테스트",
                 price = 100,
                 stockQuantity = 10
@@ -128,7 +127,7 @@ class ProductServiceTest {
             val pageSize = 10
             val products = (1L..pageSize + 1).map {
                 Product(
-                    id = it,
+                    productId = it,
                     name = "상품 테스트 ${it + 1}",
                     price = 100,
                     stockQuantity = 10

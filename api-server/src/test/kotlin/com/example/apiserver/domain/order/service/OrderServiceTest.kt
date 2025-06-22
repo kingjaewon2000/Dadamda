@@ -136,7 +136,7 @@ class OrderServiceTest {
 
             assertThatThrownBy { orderService.createOrder(request) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("재고가 부족합니다.")
+                .hasMessage("상품 재고가 부족합니다.")
         }
 
     }

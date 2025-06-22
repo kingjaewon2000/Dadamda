@@ -20,7 +20,7 @@ class Order(
 
     init {
         require(price > 0) { "상품 가격은 0보다 커야 합니다." }
-        require(quantity > 0) { "주문 수량은 0 이상이어야 합니다." }
+        require(quantity >= 0) { "주문 수량은 0 이상이어야 합니다." }
     }
 
     @Column(nullable = false)

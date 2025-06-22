@@ -35,7 +35,7 @@ class Product(
         }
 
         if (stockQuantity - quantity < 0) {
-            throw IllegalArgumentException("재고가 부족합니다.")
+            throw IllegalArgumentException("상품 재고가 부족합니다.")
         }
 
         stockQuantity -= quantity

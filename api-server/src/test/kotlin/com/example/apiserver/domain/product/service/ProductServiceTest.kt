@@ -1,4 +1,4 @@
-package com.example.apiserver.domain.service
+package com.example.apiserver.domain.product.service
 
 import com.example.apiserver.domain.product.dto.Cursor
 import com.example.apiserver.domain.product.dto.CursorPageResponse
@@ -6,7 +6,6 @@ import com.example.apiserver.domain.product.dto.ProductCreateRequest
 import com.example.apiserver.domain.product.dto.ProductResponse
 import com.example.apiserver.domain.product.entity.Product
 import com.example.apiserver.domain.product.repository.ProductRepository
-import com.example.apiserver.domain.product.service.ProductService
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -59,8 +58,8 @@ class ProductServiceTest {
         }
 
         @Test
-        @DisplayName("상품 등록 실패 가격이 0원 이하라면")
-        fun `상품 등록 실패1`() {
+        @DisplayName("상품 등록 실패 가격이 0원 이하")
+        fun `상품 등록 실패 가격이 0원 이하`() {
             // given
             assertThatThrownBy {
                 Product(
@@ -75,8 +74,8 @@ class ProductServiceTest {
         }
 
         @Test
-        @DisplayName("상품 등록 실패 수량이 -1 이하라면")
-        fun `상품 등록 실패2`() {
+        @DisplayName("상품 등록 실패 상품 수량이 -1 이하")
+        fun `상품 등록 실패 상품 수량이 -1 이하`() {
             // given
             assertThatThrownBy {
                 Product(

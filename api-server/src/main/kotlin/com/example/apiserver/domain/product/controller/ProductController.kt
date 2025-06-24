@@ -12,9 +12,10 @@ class ProductController(
 
     @GetMapping
     fun getProducts(
-        @RequestParam cursorId: Long?
-    ): CursorPageResponse<ProductResponse, Cursor?> {
-        return productService.getProducts(cursorId)
+        @RequestParam cursorId: Long?,
+        @RequestParam pageSize: Int = 20
+    ): CursorPageResponse<ProductResponse, Cursor> {
+        return productService.getProducts(cursorId, pageSize)
     }
 
     @PostMapping

@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.Query
 
 interface ProductRepository : JpaRepository<Product, Long> {
 
-    @Query("SELECT p FROM Product p WHERE p.productId > :cursorId ORDER BY p.productId ASC LIMIT :pageSize")
-    fun findNextPage(cursorId: Long, pageSize: Int): List<Product>
+    @Query(
+        "SELECT p FROM Product p " +
+                "WHERE :cursorId is NULL OR p.productId < :cursorId " +
+                "ORDER BY p.productId DESC " +
+                "LIMIT :pageSize"
+    )
+    fun findWithCursor(cursorId: Long?, pageSize: Int): List<Product>
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Product p where p.productId = :productId")

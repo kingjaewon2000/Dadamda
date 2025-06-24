@@ -16,6 +16,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.whenever
 
 @ExtendWith(MockitoExtension::class)
@@ -108,9 +109,9 @@ class ProductServiceTest {
             val cursorId = null
 
             // when
-            whenever(productRepository.findNextPage(any(), any())).thenReturn(listOf(product))
+            whenever(productRepository.findWithCursor(anyOrNull(), any())).thenReturn(listOf(product))
 
-            val response: CursorPageResponse<ProductResponse, Cursor?> = productService.getProducts(cursorId)
+            val response: CursorPageResponse<ProductResponse, Cursor> = productService.getProducts(cursorId)
 
             // then
             assertThat(response).isNotNull()
@@ -137,9 +138,9 @@ class ProductServiceTest {
             val cursorId = null
 
             // when
-            whenever(productRepository.findNextPage(any(), any<Int>())).thenReturn(products)
+            whenever(productRepository.findWithCursor(anyOrNull(), any<Int>())).thenReturn(products)
 
-            val response: CursorPageResponse<ProductResponse, Cursor?> = productService.getProducts(cursorId)
+            val response: CursorPageResponse<ProductResponse, Cursor> = productService.getProducts(cursorId, pageSize)
 
             // then
             assertThat(response).isNotNull()

@@ -2,7 +2,7 @@ spring:
   application:
     name: api-server
   datasource:
-    url: jdbc:mysql://localhost:3306/dadamda?useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/dadamda?useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root
     password: root
   jpa:

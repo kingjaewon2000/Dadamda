@@ -1,29 +1,27 @@
 package com.example.apiserver.domain.log.service
 
-import com.example.apiserver.domain.log.dto.LogIdResponse
 import com.example.apiserver.domain.log.entity.Log
-import com.example.apiserver.domain.log.repository.LogRepository
+import com.example.apiserver.domain.queue.Producer
 import com.example.apiserver.domain.search.dto.ProductSortBy
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
-@Transactional(readOnly = true)
 class LogService(
-    private val logRepository: LogRepository
+    private val producer: Producer<Log>
 ) {
 
-    @Transactional
-    fun log(sortBy: ProductSortBy, keyword: String): LogIdResponse {
-        val log = logRepository.save(
+    @Async("produceExecutor")
+    fun log(sortBy: ProductSortBy, keyword: String) {
+        producer.produce(
             Log(
                 sortBy = sortBy,
                 keyword = keyword,
                 length = keyword.length,
+                loggedAt = LocalDateTime.now(),
             )
         )
-
-        return LogIdResponse(log.logId)
     }
 
 }

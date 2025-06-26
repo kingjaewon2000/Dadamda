@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 class ApiServerApplication
 
 fun main(args: Array<String>) {
-	runApplication<ApiServerApplication>(*args)
+    runApplication<ApiServerApplication>(*args)
 }

@@ -1,8 +1,8 @@
 package com.example.apiserver.domain.log.service
 
-import com.example.apiserver.domain.log.entity.Log
-import com.example.apiserver.domain.log.repository.LogRepository
+import com.example.core.domain.log.entity.Log
 import com.example.apiserver.domain.queue.Consumer
+import com.example.core.domain.log.repository.LogRepository
 import jakarta.annotation.PostConstruct
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -1,4 +1,4 @@
-package com.example.apiserver.domain.product.strategy
+package com.example.apiserver.domain.search.strategy
 
 import com.example.apiserver.domain.product.entity.Product
 import com.example.apiserver.domain.search.dto.ProductSearchRequest

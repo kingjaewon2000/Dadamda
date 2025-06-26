@@ -3,7 +3,6 @@ rootProject.name = "dadamda"
 include("core")
 include("api-server")
 include("autocomplete-server")
-include("worker")
 
 pluginManagement {
     val kotlinVersion: String by settings

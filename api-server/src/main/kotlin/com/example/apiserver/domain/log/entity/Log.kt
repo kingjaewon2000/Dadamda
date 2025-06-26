@@ -2,7 +2,6 @@ package com.example.apiserver.domain.log.entity
 
 import com.example.apiserver.domain.search.dto.ProductSortBy
 import jakarta.persistence.*
-import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
@@ -22,11 +21,7 @@ class Log(
 
     @Column
     val length: Int,
-) {
 
-    @CreatedDate
     @Column(nullable = false, updatable = false)
-    lateinit var loggedAt: LocalDateTime
-        private set
-
-}
+    val loggedAt: LocalDateTime,
+)

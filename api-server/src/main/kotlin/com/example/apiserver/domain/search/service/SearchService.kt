@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class SearchService(
     private val strategyFactory: ProductSortStrategyFactory,
-    private val logService: LogService
+    private val logService: LogService,
 ) {
 
     @Transactional

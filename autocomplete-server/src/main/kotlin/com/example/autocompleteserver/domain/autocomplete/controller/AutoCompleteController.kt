@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/auto-complete")
 class AutoCompleteController(
-    private val autoCompleteService: AutoCompleteService
+    private val autocompleteService: AutoCompleteService
 ) {
 
     @GetMapping
@@ -20,7 +20,7 @@ class AutoCompleteController(
             return ApiResponse(emptyList())
         }
 
-        val searchResults = autoCompleteService.getSuggestions(query.lowercase())
+        val searchResults = autocompleteService.getSuggestions(query.lowercase())
 
         return ApiResponse(searchResults)
     }

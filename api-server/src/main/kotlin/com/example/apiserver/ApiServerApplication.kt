@@ -9,11 +9,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @SpringBootApplication
 @EnableJpaAuditing
 @EntityScan(basePackages = [
-    "com.example.core",
+    "com.example.core.domain.log",
     "com.example.apiserver"
 ])
 @EnableJpaRepositories(basePackages = [
-    "com.example.core.domain",
+    "com.example.core.domain.log",
     "com.example.apiserver"
 ])
 class ApiServerApplication

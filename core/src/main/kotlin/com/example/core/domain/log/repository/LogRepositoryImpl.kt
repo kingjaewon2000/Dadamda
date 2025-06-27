@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import java.sql.PreparedStatement
 import java.sql.Timestamp
 
-class JdbcLogRepositoryImpl(
+class LogRepositoryImpl(
     private val jdbcTemplate: JdbcTemplate
 ) : JdbcLogRepository {
 

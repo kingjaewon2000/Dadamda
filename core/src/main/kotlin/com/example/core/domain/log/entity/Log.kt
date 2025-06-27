@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
@@ -29,6 +30,12 @@ class Log(
     @Column
     val length: Int,
 
+
+) {
+
+    @CreatedDate
     @Column(nullable = false, updatable = false)
-    val loggedAt: LocalDateTime,
-)
+    lateinit var loggedAt: LocalDateTime
+        private set
+
+}

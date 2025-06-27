@@ -1,4 +1,4 @@
-package com.example.apiserver.domain.search.dto
+package com.example.core.domain.log.entity
 
 enum class ProductSortBy(val description: String) {
 

@@ -1,22 +1,22 @@
-package com.example.apiserver.domain.product.strategy
+package com.example.apiserver.domain.search.strategy
 
 import com.example.apiserver.domain.product.entity.Product
 import com.example.apiserver.domain.product.repository.ProductRepository
 import com.example.apiserver.domain.search.dto.ProductSearchRequest
-import com.example.apiserver.domain.search.dto.ProductSortBy
+import com.example.core.domain.log.entity.ProductSortBy
 import org.springframework.stereotype.Component
 
 @Component
-class NewestProductSortStrategy(
+class BestSellingStrategy(
     private val productRepository: ProductRepository
 ) : ProductSortStrategy {
 
     override fun fetchProducts(request: ProductSearchRequest): List<Product> {
-        return productRepository.findNewest(
+        return productRepository.findBestSelling(
             keyword = request.keyword,
         )
     }
 
-    override fun getSortBy(): ProductSortBy = ProductSortBy.NEWEST
+    override fun getSortBy(): ProductSortBy = ProductSortBy.BEST_SELLING
 
 }

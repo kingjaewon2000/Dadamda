@@ -1,11 +1,9 @@
 spring:
   application:
-    name: autocomplete-server
-  elasticsearch:
-    uris: http://localhost:9200
+    name: worker
   datasource:
     url: jdbc:mysql://localhost:3306/dadamda?useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root
     password: root
 server:
-  port: 8081
+  port: 9000

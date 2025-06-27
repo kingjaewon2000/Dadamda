@@ -1,6 +1,6 @@
 package com.example.apiserver.global.config
 
-import com.example.apiserver.domain.log.entity.Log
+import com.example.core.domain.log.entity.Log
 import com.example.apiserver.domain.queue.BlockingLogQueue
 import com.example.apiserver.domain.queue.Consumer
 import com.example.apiserver.domain.queue.Producer

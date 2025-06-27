@@ -2,8 +2,8 @@ package com.example.apiserver.domain.search.service
 
 import com.example.apiserver.domain.log.service.LogService
 import com.example.apiserver.domain.product.dto.ProductResponse
-import com.example.apiserver.domain.product.strategy.ProductSortStrategyFactory
 import com.example.apiserver.domain.search.dto.ProductSearchRequest
+import com.example.apiserver.domain.search.strategy.ProductSortStrategyFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,7 +14,6 @@ class SearchService(
     private val logService: LogService,
 ) {
 
-    @Transactional
     fun searchProducts(request: ProductSearchRequest): List<ProductResponse> {
         val strategy = strategyFactory.getStrategy(request.sortBy)
 

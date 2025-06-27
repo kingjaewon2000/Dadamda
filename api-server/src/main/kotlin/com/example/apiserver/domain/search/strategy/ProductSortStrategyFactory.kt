@@ -1,6 +1,6 @@
-package com.example.apiserver.domain.product.strategy
+package com.example.apiserver.domain.search.strategy
 
-import com.example.apiserver.domain.search.dto.ProductSortBy
+import com.example.core.domain.log.entity.ProductSortBy
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,15 +1,13 @@
-package com.example.apiserver.domain.log.repository
+package com.example.core.domain.log.repository
 
-import com.example.apiserver.domain.log.entity.Log
+import com.example.core.domain.log.entity.Log
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.stereotype.Repository
 import java.sql.PreparedStatement
 import java.sql.Timestamp
 
-@Repository
 class LogRepositoryImpl(
     private val jdbcTemplate: JdbcTemplate
-) : LogRepository {
+) : JdbcLogRepository {
 
     companion object {
         private const val BULK_INSERT_SQL = """

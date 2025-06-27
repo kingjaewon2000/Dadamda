@@ -1,8 +1,8 @@
 package com.example.apiserver.domain.log.service
 
-import com.example.apiserver.domain.log.entity.Log
+import com.example.core.domain.log.entity.Log
 import com.example.apiserver.domain.queue.Producer
-import com.example.apiserver.domain.search.dto.ProductSortBy
+import com.example.core.domain.log.entity.ProductSortBy
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime

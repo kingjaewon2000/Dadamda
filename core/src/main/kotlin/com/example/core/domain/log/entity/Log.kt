@@ -29,8 +29,6 @@ class Log(
 
     @Column
     val length: Int,
-
-
 ) {
 
     @CreatedDate

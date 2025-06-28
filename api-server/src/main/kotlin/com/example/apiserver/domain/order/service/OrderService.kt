@@ -2,8 +2,8 @@ package com.example.apiserver.domain.order.service
 
 import com.example.apiserver.domain.order.dto.OrderCreateRequest
 import com.example.apiserver.domain.order.dto.OrderIdResponse
-import com.example.apiserver.domain.order.repository.OrderRepository
-import com.example.apiserver.domain.product.repository.ProductRepository
+import com.example.core.domain.order.repository.OrderRepository
+import com.example.core.domain.product.repository.ProductRepository
 import com.example.core.global.exception.ApiException
 import com.example.core.global.exception.ErrorCode
 import org.springframework.stereotype.Service

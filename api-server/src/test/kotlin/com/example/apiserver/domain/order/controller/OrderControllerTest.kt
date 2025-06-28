@@ -2,8 +2,8 @@ package com.example.apiserver.domain.order.controller
 
 import com.example.apiserver.domain.order.dto.OrderCreateRequest
 import com.example.apiserver.domain.order.service.OrderService
-import com.example.apiserver.domain.product.entity.Product
-import com.example.apiserver.domain.product.repository.ProductRepository
+import com.example.core.domain.product.entity.Product
+import com.example.core.domain.product.repository.ProductRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

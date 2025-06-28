@@ -1,10 +1,10 @@
 package com.example.apiserver.domain.order.service
 
 import com.example.apiserver.domain.order.dto.OrderCreateRequest
-import com.example.apiserver.domain.order.entity.Order
-import com.example.apiserver.domain.order.repository.OrderRepository
-import com.example.apiserver.domain.product.entity.Product
-import com.example.apiserver.domain.product.repository.ProductRepository
+import com.example.core.domain.order.entity.Order
+import com.example.core.domain.order.repository.OrderRepository
+import com.example.core.domain.product.entity.Product
+import com.example.core.domain.product.repository.ProductRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName

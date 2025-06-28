@@ -1,11 +1,11 @@
 package com.example.apiserver.domain.product.service
 
-import com.example.apiserver.domain.product.dto.Cursor
-import com.example.apiserver.domain.product.dto.CursorPageResponse
-import com.example.apiserver.domain.product.dto.ProductCreateRequest
-import com.example.apiserver.domain.product.dto.ProductResponse
-import com.example.apiserver.domain.product.entity.Product
-import com.example.apiserver.domain.product.repository.ProductRepository
+import com.example.core.domain.product.dto.Cursor
+import com.example.core.domain.product.dto.CursorPageResponse
+import com.example.core.domain.product.dto.ProductCreateRequest
+import com.example.core.domain.product.dto.ProductResponse
+import com.example.core.domain.product.entity.Product
+import com.example.core.domain.product.repository.ProductRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName

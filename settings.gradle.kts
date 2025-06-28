@@ -2,6 +2,7 @@ rootProject.name = "dadamda"
 
 include("core")
 include("api-server")
+include("search-server")
 include("autocomplete-server")
 include("worker")
 

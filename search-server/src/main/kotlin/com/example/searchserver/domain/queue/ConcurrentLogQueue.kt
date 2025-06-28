@@ -13,7 +13,7 @@ import kotlin.concurrent.withLock
  * 1. 큐에 아이템이 `batchSize` 이상 쌓였을 때 즉시 처리
  * 2. 아이템이 `batchSize` 미만이더라도, `timeoutMillis` 시간이 경과했을 때
  */
-class BlockingLogQueue<T>(
+class ConcurrentLogQueue<T>(
     capacity: Int = Int.MAX_VALUE,
     private val batchSize: Int = 1000,
     private val timeoutMillis: Long = 5000L

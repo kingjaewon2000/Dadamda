@@ -18,39 +18,34 @@ class AutoCompleteSchedule(
     private val logger: Logger = LoggerFactory.getLogger(AutoCompleteSchedule::class.java)
 
     companion object {
-        private const val LOG_FETCH_WINDOW_MINUTES = 1L
+        private const val WINDOW_MINUTES = 1L
         private const val MIN_KEYWORD_LENGTH = 1
         private const val MAX_KEYWORD_LENGTH = 49
     }
 
     @Scheduled(cron = "0 * * * * *")
     fun updateAutocompleteKeywords() {
-        val startTime = LocalDateTime.now().minusMinutes(LOG_FETCH_WINDOW_MINUTES)
+        logger.info("검색어 자동완성 업데이트 스케줄 시작")
+
         val endTime = LocalDateTime.now()
+        val startTime = endTime.minusMinutes(WINDOW_MINUTES)
 
-        val logs = fetchRecentLogs(startTime, endTime)
-
+        val logs = findLogsByPeriod(startTime, endTime)
         if (logs.isEmpty()) {
-            logger.info("자동완성으로 갱신할 최근 로그가 없습니다.")
+            logger.info("자동완성으로 갱신할 로그가 없습니다.")
             return
         }
 
         val frequencyMap = calculateKeywordFrequencies(logs)
-
         if (frequencyMap.isEmpty()) {
             logger.info("유효한 키워드가 없어 자동완성 갱신을 건너뜁니다.")
             return
         }
 
-        try {
-            autocompleteRepository.bulkUpdateFrequency(frequencyMap)
-            logger.info("자동완성 키워드 {}건을 성공적으로 Upsert했습니다.", frequencyMap.size)
-        } catch (e: Exception) {
-            logger.error("자동완성 키워드 Upsert 중 오류 발생", e)
-        }
+        updateKeywords(frequencyMap)
     }
 
-    private fun fetchRecentLogs(startTime: LocalDateTime, endTime: LocalDateTime): List<Log> {
+    private fun findLogsByPeriod(startTime: LocalDateTime, endTime: LocalDateTime): List<Log> {
         return logRepository.findByLoggedAtBetween(startTime, endTime)
     }
 
@@ -62,6 +57,15 @@ class AutoCompleteSchedule(
             .groupingBy { it }
             .eachCount()
             .mapValues { it.value.toLong() }
+    }
+
+    private fun updateKeywords(frequencyMap: Map<String, Long>) {
+        try {
+            autocompleteRepository.bulkUpdateFrequency(frequencyMap)
+            logger.info("자동완성 키워드 {}건을 성공적으로 업데이트 했습니다.", frequencyMap.size)
+        } catch (e: Exception) {
+            logger.error("자동완성 키워드 업데이트 중 오류 발생", e)
+        }
     }
 
 }

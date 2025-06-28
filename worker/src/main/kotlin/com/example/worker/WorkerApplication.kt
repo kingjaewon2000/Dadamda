@@ -10,11 +10,11 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 @EnableScheduling
 @EntityScan(basePackages = [
-    "com.example.core.domain.log",
+    "com.example.core.domain",
     "com.example.worker"
 ])
 @EnableJpaRepositories(basePackages = [
-    "com.example.core.domain.log",
+    "com.example.core.domain",
     "com.example.worker"
 ])
 @EnableElasticsearchRepositories(basePackages = [

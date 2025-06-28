@@ -15,7 +15,6 @@ abstract class BaseTimeEntity {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     lateinit var createdAt: LocalDateTime
-        private set
 
     @LastModifiedDate
     @Column(nullable = false)

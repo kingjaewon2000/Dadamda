@@ -1,7 +1,7 @@
 package com.example.apiserver.domain.order.dto
 
-import com.example.apiserver.domain.order.entity.Order
-import com.example.apiserver.domain.product.entity.Product
+import com.example.core.domain.order.entity.Order
+import com.example.core.domain.product.entity.Product
 
 data class OrderCreateRequest(
     val productId: Long,

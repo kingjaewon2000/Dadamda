@@ -12,7 +12,7 @@ class LogRepositoryImpl(
     companion object {
         private const val BULK_INSERT_SQL = """
             INSERT INTO logs (keyword, length, sort_by, logged_at) 
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?, NOW())
         """
     }
 
@@ -31,7 +31,6 @@ class LogRepositoryImpl(
         ps.setString(1, log.keyword)
         ps.setInt(2, log.length)
         ps.setString(3, log.sortBy.name)
-        ps.setTimestamp(4, Timestamp.valueOf(log.loggedAt))
     }
 
 }

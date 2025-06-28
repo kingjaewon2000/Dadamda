@@ -1,11 +1,11 @@
 package com.example.apiserver.domain.product.service
 
-import com.example.apiserver.domain.product.dto.Cursor
-import com.example.apiserver.domain.product.dto.CursorPageResponse
-import com.example.apiserver.domain.product.dto.ProductCreateRequest
-import com.example.apiserver.domain.product.dto.ProductResponse
-import com.example.apiserver.domain.product.entity.Product
-import com.example.apiserver.domain.product.repository.ProductRepository
+import com.example.core.domain.product.dto.Cursor
+import com.example.core.domain.product.dto.CursorPageResponse
+import com.example.core.domain.product.dto.ProductCreateRequest
+import com.example.core.domain.product.dto.ProductResponse
+import com.example.core.domain.product.entity.Product
+import com.example.core.domain.product.repository.ProductRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -18,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.whenever
+import org.springframework.context.ApplicationEventPublisher
+import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
 class ProductServiceTest {
@@ -27,6 +29,9 @@ class ProductServiceTest {
 
     @Mock
     private lateinit var productRepository: ProductRepository
+
+    @Mock
+    private lateinit var eventPublisher: ApplicationEventPublisher
 
     @Nested
     @DisplayName("상품 등록 테스트")
@@ -40,8 +45,9 @@ class ProductServiceTest {
                 productId = 1L,
                 name = "상품 테스트",
                 price = 100,
-                stockQuantity = 10
+                stockQuantity = 10,
             )
+            product.createdAt = LocalDateTime.now()
 
             val request = ProductCreateRequest(
                 name = product.name,

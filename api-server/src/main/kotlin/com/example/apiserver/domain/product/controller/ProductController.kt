@@ -1,7 +1,11 @@
 package com.example.apiserver.domain.product.controller
 
-import com.example.apiserver.domain.product.dto.*
 import com.example.apiserver.domain.product.service.ProductService
+import com.example.core.domain.product.dto.Cursor
+import com.example.core.domain.product.dto.CursorPageResponse
+import com.example.core.domain.product.dto.ProductCreateRequest
+import com.example.core.domain.product.dto.ProductIdResponse
+import com.example.core.domain.product.dto.ProductResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController

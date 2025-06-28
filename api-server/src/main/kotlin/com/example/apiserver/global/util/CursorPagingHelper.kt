@@ -1,6 +1,6 @@
 package com.example.apiserver.global.util
 
-import com.example.apiserver.domain.product.dto.CursorPageResponse
+import com.example.core.domain.product.dto.CursorPageResponse
 
 object CursorPagingHelper {
 

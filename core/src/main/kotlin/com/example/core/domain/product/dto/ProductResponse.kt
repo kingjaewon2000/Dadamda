@@ -1,5 +1,6 @@
 package com.example.core.domain.product.dto
 
+import com.example.core.domain.product.document.ProductDocument
 import com.example.core.domain.product.entity.Product
 
 data class ProductResponse(
@@ -14,6 +15,14 @@ data class ProductResponse(
                 productId = product.productId,
                 name = product.name,
                 price = product.price,
+            )
+        }
+
+        fun from(product: ProductDocument): ProductResponse {
+            return ProductResponse(
+                productId = product.id.toLong(),
+                name = product.name,
+                price = product.price
             )
         }
     }

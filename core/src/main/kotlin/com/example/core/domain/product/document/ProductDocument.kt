@@ -1,6 +1,7 @@
 package com.example.core.domain.product.document
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.elasticsearch.annotations.DateFormat
 import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.data.elasticsearch.annotations.Field
 import org.springframework.data.elasticsearch.annotations.FieldType
@@ -9,6 +10,7 @@ import java.time.LocalDateTime
 @Document(indexName = "products")
 class ProductDocument(
     @Id
+    @Field(type = FieldType.Keyword)
     val id: String,
 
     @Field(type = FieldType.Text, name = "name")
@@ -22,6 +24,6 @@ class ProductDocument(
     val salesCount: Long = 0,
 
     // 신규 상품 순 정렬을 위한 필드
-    @Field(type = FieldType.Date, name = "createdAt")
+    @Field(type = FieldType.Date, format = [ DateFormat.date_hour_minute_second_millis, DateFormat.epoch_millis ], name = "createdAt")
     val createdAt: LocalDateTime
 )

@@ -22,7 +22,7 @@ class Log(
 
     @Column
     @Enumerated(EnumType.STRING)
-    val sortBy: ProductSortBy,
+    val sortBy: ProductSort,
 
     @Column
     val keyword: String,

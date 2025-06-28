@@ -1,10 +1,10 @@
 package com.example.searchserver.domain.search.dto
 
-import com.example.core.domain.log.entity.ProductSortBy
+import com.example.core.domain.log.entity.ProductSort
 
 
 data class ProductSearchRequest(
     val keyword: String,
 
-    val sortBy: ProductSortBy = ProductSortBy.NEWEST,
+    val sortBy: ProductSort = ProductSort.NEWEST,
 )

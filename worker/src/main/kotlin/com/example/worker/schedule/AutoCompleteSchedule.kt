@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 
 @Component
 class AutoCompleteSchedule(
@@ -21,14 +24,30 @@ class AutoCompleteSchedule(
         private const val WINDOW_MINUTES = 1L
         private const val MIN_KEYWORD_LENGTH = 1
         private const val MAX_KEYWORD_LENGTH = 49
+
+        private val KST_ZONE_ID = ZoneId.of("Asia/Seoul")
+        private val UTC_ZONE_ID = ZoneId.of("UTC")
     }
 
     @Scheduled(cron = "0 * * * * *")
     fun updateAutocompleteKeywords() {
         logger.info("검색어 자동완성 업데이트 스케줄 시작")
 
-        val endTime = LocalDateTime.now()
-        val startTime = endTime.minusMinutes(WINDOW_MINUTES)
+        val nowInKst = ZonedDateTime.now(KST_ZONE_ID)
+
+        val endTimeInKst = nowInKst.truncatedTo(ChronoUnit.MINUTES)
+        val startTimeInKst = endTimeInKst.minusMinutes(1)
+
+        val startTimeInUtc = startTimeInKst.withZoneSameInstant(UTC_ZONE_ID)
+        val endTimeInUtc = endTimeInKst.withZoneSameInstant(UTC_ZONE_ID)
+
+        val startTime: LocalDateTime = startTimeInUtc.toLocalDateTime()
+        val endTime: LocalDateTime = endTimeInUtc.toLocalDateTime()
+
+        logger.info("데이터 조회 기간 (KST 기준): $startTimeInKst ~ $endTimeInKst")
+        logger.info("DB 쿼리용 시간 (UTC 기준 LocalDateTime): $startTime ~ $endTime")
+
+        logger.info("데이터 조회 기간: $startTime ~ $endTime")
 
         val logs = findLogsByPeriod(startTime, endTime)
         if (logs.isEmpty()) {

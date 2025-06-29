@@ -38,7 +38,7 @@ class AutoCompleteRepositoryImpl(
                 .build()
         }
 
-        elasticsearchOperations.bulkUpdate(updateQueries, IndexCoordinates.of("autocomplete_v1"))
+        elasticsearchOperations.bulkUpdate(updateQueries, IndexCoordinates.of("autocomplete"))
     }
 
 }

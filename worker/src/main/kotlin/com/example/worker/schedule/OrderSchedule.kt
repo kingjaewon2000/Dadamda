@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 @Component
 class OrderSchedule(
@@ -23,8 +24,10 @@ class OrderSchedule(
     @Scheduled(cron = "0 * * * * *")
     fun updateSalesCountDaily() {
         logger.info("판매량 업데이트 스케줄 시작")
-        val endTime = LocalDateTime.now()
+        val endTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES)
         val startTime = endTime.minusMinutes(WINDOW_MINUTES)
+
+        logger.info("데이터 조회 기간: $startTime ~ $endTime")
 
         val salesData = orderRepository.findSalesCountByPeriod(startTime, endTime)
         if (salesData.isEmpty()) {

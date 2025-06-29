@@ -10,8 +10,8 @@ import java.time.LocalDateTime
 @Document(indexName = "products")
 class ProductDocument(
     @Id
-    @Field(type = FieldType.Keyword)
-    val id: String,
+    @Field(type = FieldType.Long)
+    val id: Long,
 
     @Field(type = FieldType.Text, name = "name")
     val name: String,

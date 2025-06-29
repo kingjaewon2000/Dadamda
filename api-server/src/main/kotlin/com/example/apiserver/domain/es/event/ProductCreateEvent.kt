@@ -14,7 +14,7 @@ data class ProductCreateEvent(
         checkNotNull(productId) { "엘라스틱서치 인덱싱을 위해서는 상품 ID가 null일 수 없습니다." }
 
         return ProductDocument(
-            id = productId.toString(),
+            id = productId,
             name = name,
             price = price,
             salesCount = 0,

@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType
 class AutoCompleteDocument(
 
     @Id
+    @Field(type = FieldType.Keyword)
     val keyword: String,
 
     @Field(type = FieldType.Text, name = "suggest_ngram")

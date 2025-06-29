@@ -1,6 +1,6 @@
-package com.example.apiserver.domain.es.listener
+package com.example.apiserver.domain.event.listener
 
-import com.example.apiserver.domain.es.event.ProductCreateEvent
+import com.example.apiserver.domain.event.dto.ProductCreateEvent
 import com.example.core.domain.product.repository.ProductDocumentRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

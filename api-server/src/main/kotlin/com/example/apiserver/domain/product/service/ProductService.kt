@@ -1,6 +1,6 @@
 package com.example.apiserver.domain.product.service
 
-import com.example.apiserver.domain.es.event.ProductCreateEvent
+import com.example.apiserver.domain.event.dto.ProductCreateEvent
 import com.example.core.domain.product.repository.ProductRepository
 import com.example.apiserver.global.util.CursorPagingHelper
 import com.example.core.domain.product.dto.Cursor

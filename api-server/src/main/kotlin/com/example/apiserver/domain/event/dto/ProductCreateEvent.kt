@@ -1,4 +1,4 @@
-package com.example.apiserver.domain.es.event
+package com.example.apiserver.domain.event.dto
 
 import com.example.core.domain.product.document.ProductDocument
 import java.time.LocalDateTime

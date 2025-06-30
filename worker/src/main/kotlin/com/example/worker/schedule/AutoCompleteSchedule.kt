@@ -3,16 +3,14 @@ package com.example.worker.schedule
 import com.example.core.domain.autocomplete.repository.AutoCompleteRepository
 import com.example.core.domain.log.entity.Log
 import com.example.core.domain.log.repository.LogRepository
+import com.example.worker.csv.CsvReader
 import com.example.worker.csv.CsvWriter
-import org.apache.commons.csv.CSVFormat
-import org.apache.commons.csv.CSVParser
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.LocalDateTime
@@ -22,6 +20,7 @@ import java.util.stream.Stream
 
 @Component
 class AutoCompleteSchedule(
+    private val csvReader: CsvReader,
     private val csvWriter: CsvWriter,
     private val logRepository: LogRepository,
     private val autocompleteRepository: AutoCompleteRepository
@@ -32,17 +31,12 @@ class AutoCompleteSchedule(
     @Value("\${csv.export-path}")
     private lateinit var exportPath: String
 
-    companion object {
-        private const val CHUNK_SIZE = 1000
-        private const val MIN_KEYWORD_LENGTH = 1
-        private const val MAX_KEYWORD_LENGTH = 49
-
-        private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
-    }
+    private val CHUNK_SIZE = 1000
+    private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
 
     @Scheduled(cron = "0 * * * * *")
     @Transactional(readOnly = true)
-    fun updateAutocompleteKeywords() {
+    fun runAutocompleteUpdateJob() {
         logger.info("검색어 자동완성 업데이트 스케줄 시작")
 
         val now = LocalDateTime.now(ZoneId.of(KST_ZONE_ID))
@@ -57,13 +51,13 @@ class AutoCompleteSchedule(
         val filePath = Paths.get(exportPath, fileName)
 
         // 로그 데이터를 CSV 파일로 작성
-        createLogsToCsv(filePath, logStream)
+        exportLogsToCsvFile(filePath, logStream)
 
         // 청크 단위로 CSV 파일을 읽어 엘라스틱 서치에 업데이트
         updateElasticsearchFromCsv(filePath)
     }
 
-    private fun createLogsToCsv(filePath: Path, logStream: Stream<Log>) {
+    private fun exportLogsToCsvFile(filePath: Path, logStream: Stream<Log>) {
         csvWriter.write(
             filePath = filePath,
             dataStream = logStream,
@@ -75,44 +69,23 @@ class AutoCompleteSchedule(
     }
 
     private fun updateElasticsearchFromCsv(filePath: Path) {
-        if (Files.notExists(filePath)) {
-            logger.warn("처리할 CSV 파일이 존재하지 않습니다: ${filePath.fileName}")
-            return
-        }
-        val format = CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).get()
-
-        val reader = Files.newBufferedReader(filePath, Charsets.UTF_8)
-        val csvParser = CSVParser.parse(reader, format)
-
-        val keywords = mutableListOf<String>()
-        var totalProcessedLines = 0L
+        logger.info("CSV 파일로부터 엘라스틱서치 재색인을 시작합니다: ${filePath.fileName}")
 
         try {
-            csvParser.use { parser ->
-                for (record in parser.records) {
-                    val keyword = record["keyword"].trim().lowercase()
+            val sequence = csvReader.readRecords(filePath) { record ->
+                record["keyword"].trim().lowercase()
+            }
 
-                    if (keyword.length in MIN_KEYWORD_LENGTH..MAX_KEYWORD_LENGTH) {
-                        keywords.add(keyword)
-                    }
-                    totalProcessedLines++
-
-                    if (keywords.size >= CHUNK_SIZE) {
-                        val frequencyMap = calculateFrequencyMap(keywords)
-                        updateElasticsearch(frequencyMap)
-                        keywords.clear()
-                    }
+            sequence.chunked(CHUNK_SIZE).forEach { chunk ->
+                if (chunk.isNotEmpty()) {
+                    val frequencyMap = calculateFrequencyMap(chunk)
+                    updateElasticsearch(frequencyMap)
                 }
             }
 
-            if (keywords.isNotEmpty()) {
-                val frequencyMap = calculateFrequencyMap(keywords)
-                updateElasticsearch(frequencyMap)
-            }
-
-            logger.info("총 $totalProcessedLines 라인 업데이트 완료.")
+            logger.info("CSV 파일로부터의 재색인 작업을 완료했습니다.")
         } catch (e: Exception) {
-            logger.error("CSV 처리 중 오류 발생: ${filePath.fileName}", e)
+            logger.error("CSV 재색인 중 오류 발생: ${filePath.fileName}", e)
             throw e
         }
     }

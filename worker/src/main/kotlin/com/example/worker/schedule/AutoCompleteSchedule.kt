@@ -17,7 +17,6 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import java.util.stream.Stream
 
@@ -38,8 +37,7 @@ class AutoCompleteSchedule(
         private const val MIN_KEYWORD_LENGTH = 1
         private const val MAX_KEYWORD_LENGTH = 49
 
-        private val KST_ZONE_ID = ZoneId.of("Asia/Seoul")
-        private val UTC_ZONE_ID = ZoneId.of("UTC")
+        private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
     }
 
     @Scheduled(cron = "0 * * * * *")
@@ -47,21 +45,11 @@ class AutoCompleteSchedule(
     fun updateAutocompleteKeywords() {
         logger.info("검색어 자동완성 업데이트 스케줄 시작")
 
-        val nowInKst = ZonedDateTime.now(KST_ZONE_ID)
+        val now = LocalDateTime.now(ZoneId.of(KST_ZONE_ID))
+        val endTime = now.truncatedTo(ChronoUnit.MINUTES)
+        val startTime = now.minusMinutes(1)
 
-        val endTimeInKst = nowInKst.truncatedTo(ChronoUnit.MINUTES)
-        val startTimeInKst = endTimeInKst.minusMinutes(1)
-
-        val startTimeInUtc = startTimeInKst.withZoneSameInstant(UTC_ZONE_ID)
-        val endTimeInUtc = endTimeInKst.withZoneSameInstant(UTC_ZONE_ID)
-
-        val startTime: LocalDateTime = startTimeInUtc.toLocalDateTime()
-        val endTime: LocalDateTime = endTimeInUtc.toLocalDateTime()
-
-        logger.info("데이터 조회 기간 (KST 기준): $startTimeInKst ~ $endTimeInKst")
-        logger.info("DB 쿼리용 시간 (UTC 기준 LocalDateTime): $startTime ~ $endTime")
-
-        logger.info("데이터 조회 기간: $startTime ~ $endTime")
+        logger.info("데이터 조회 기간 (KST 기준): $startTime ~ $endTime")
 
         val logStream = logRepository.findByLoggedAtBetweenAsStream(startTime, endTime)
 
@@ -75,10 +63,7 @@ class AutoCompleteSchedule(
         updateElasticsearchFromCsv(filePath)
     }
 
-    private fun createLogsToCsv(
-        filePath: Path,
-        logStream: Stream<Log>
-    ) {
+    private fun createLogsToCsv(filePath: Path, logStream: Stream<Log>) {
         csvWriter.write(
             filePath = filePath,
             dataStream = logStream,
@@ -104,8 +89,8 @@ class AutoCompleteSchedule(
 
         try {
             csvParser.use { parser ->
-                for (record in parser) {
-                    val keyword = record.get("keyword").trim().lowercase()
+                for (record in parser.records) {
+                    val keyword = record["keyword"].trim().lowercase()
 
                     if (keyword.length in MIN_KEYWORD_LENGTH..MAX_KEYWORD_LENGTH) {
                         keywords.add(keyword)

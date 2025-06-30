@@ -5,8 +5,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.elasticsearch.annotations.Query
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
-interface ProductDocumentRepository : ElasticsearchRepository<ProductDocument, String>,
-    CustomProductDocumentRepository {
+interface ProductDocumentRepository : ElasticsearchRepository<ProductDocument, String> {
 
     @Query(
         """

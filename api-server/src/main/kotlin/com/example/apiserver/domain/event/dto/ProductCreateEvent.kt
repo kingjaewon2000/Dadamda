@@ -7,6 +7,7 @@ data class ProductCreateEvent(
     val productId: Long,
     val name: String,
     val price: Int,
+    val stockQuantity: Int,
     val createdAt: LocalDateTime
 ) {
 
@@ -17,6 +18,7 @@ data class ProductCreateEvent(
             id = productId,
             name = name,
             price = price,
+            stockQuantity = stockQuantity,
             salesCount = 0,
             createdAt = createdAt
         )

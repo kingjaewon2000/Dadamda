@@ -26,6 +26,9 @@ class ProductDocument(
     @Field(type = FieldType.Integer)
     val price: Int,
 
+    @Field(type = FieldType.Integer)
+    val stockQuantity: Int,
+
     // 판매량 순 정렬을 위한 필드
     @Field(type = FieldType.Long)
     val salesCount: Long = 0,

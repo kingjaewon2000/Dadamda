@@ -22,6 +22,11 @@ class ProductController(
         return productService.getProducts(cursorId, pageSize)
     }
 
+    @GetMapping("/top10")
+    fun getTop10Products(): List<ProductResponse> {
+        return productService.getTop10Products()
+    }
+
     @PostMapping
     fun createProduct(@RequestBody request: ProductCreateRequest): ProductIdResponse {
         return productService.createProduct(request)

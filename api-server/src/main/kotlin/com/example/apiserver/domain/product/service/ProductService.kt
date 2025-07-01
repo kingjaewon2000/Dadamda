@@ -3,6 +3,7 @@ package com.example.apiserver.domain.product.service
 import com.example.apiserver.domain.event.dto.ProductCreateEvent
 import com.example.apiserver.global.util.CursorPagingHelper
 import com.example.core.domain.product.dto.*
+import com.example.core.domain.product.repository.ProductDocumentRepository
 import com.example.core.domain.product.repository.ProductRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class ProductService(
     private val productRepository: ProductRepository,
+    private val productDocumentRepository: ProductDocumentRepository,
     private val eventPublisher: ApplicationEventPublisher
 ) {
 
@@ -27,6 +29,12 @@ class ProductService(
         )
 
         return cursorPage
+    }
+
+    fun getTop10Products(): List<ProductResponse> {
+        val top10Products = productDocumentRepository.findTop10ByOrderBySalesCountDescIdDesc()
+
+        return top10Products.map(ProductResponse::from)
     }
 
     @Transactional

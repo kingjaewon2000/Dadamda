@@ -19,4 +19,6 @@ interface ProductDocumentRepository : ElasticsearchRepository<ProductDocument, S
     )
     fun searchByName(keyword: String, pageable: Pageable): List<ProductDocument>
 
+    fun findTop10ByOrderBySalesCountDescIdDesc(): List<ProductDocument>
+
 }

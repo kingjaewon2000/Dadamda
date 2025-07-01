@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.elasticsearch.annotations.*
 import java.time.LocalDateTime
 
-@Document(indexName = "products")
+@Document(indexName = "product_alias", createIndex = false)
 @Setting(settingPath = "elasticsearch/settings/product.json")
 class ProductDocument(
     @Id

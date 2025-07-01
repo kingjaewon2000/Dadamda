@@ -9,17 +9,15 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AutoCompleteRepository : ElasticsearchRepository<AutoCompleteDocument, String>, CustomAutoCompleteRepository {
 
-    @Query(
-        """
+    @Query("""
         {
-          "simple_query_string": {
-            "query": "?0",
-            "fields": [ "suggest_ngram" ],
-            "default_operator": "AND"
+          "match": {
+            "suggest_ngram": {
+              "query": "?0"
+            }
           }
         }
-    """
-    )
+    """)
     fun findBySuggestWithPageable(query: String, pageable: Pageable): List<AutoCompleteDocument>
 
 }

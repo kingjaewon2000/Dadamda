@@ -1,10 +1,12 @@
 package com.example.core.domain.product.repository
 
+import com.example.core.domain.order.dto.ProductSalesResponse
 import com.example.core.domain.product.entity.Product
 import jakarta.persistence.LockModeType
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Query
+import java.util.stream.Stream
 
 interface ProductRepository : JpaRepository<Product, Long> {
 
@@ -38,5 +40,17 @@ interface ProductRepository : JpaRepository<Product, Long> {
                 "ORDER BY count(o) DESC "
     )
     fun findBestSelling(keyword: String): List<Product>
+
+    /*
+        배치용 쿼리
+     */
+    @Query(
+        """
+        SELECT new com.example.core.domain.order.dto.ProductSalesResponse(p.productId, p.name, p.price, p.stockQuantity, COALESCE(SUM(o.quantity), 0L), p.createdAt)
+        FROM Product p left JOIN Order o ON p.productId = o.product.productId
+        GROUP BY p.productId
+    """
+    )
+    fun findAllWithSalesCountAsStream(): Stream<ProductSalesResponse>
 
 }

@@ -1,13 +1,9 @@
 package com.example.apiserver.domain.product.service
 
-import com.example.apiserver.domain.es.event.ProductCreateEvent
-import com.example.core.domain.product.repository.ProductRepository
+import com.example.apiserver.domain.event.dto.ProductCreateEvent
 import com.example.apiserver.global.util.CursorPagingHelper
-import com.example.core.domain.product.dto.Cursor
-import com.example.core.domain.product.dto.CursorPageResponse
-import com.example.core.domain.product.dto.ProductCreateRequest
-import com.example.core.domain.product.dto.ProductIdResponse
-import com.example.core.domain.product.dto.ProductResponse
+import com.example.core.domain.product.dto.*
+import com.example.core.domain.product.repository.ProductRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -39,8 +35,9 @@ class ProductService(
 
         val event = ProductCreateEvent(
             productId = product.productId,
-            name = request.name,
-            price = request.price,
+            name = product.name,
+            price = product.price,
+            stockQuantity = product.stockQuantity,
             createdAt = product.createdAt
         )
         eventPublisher.publishEvent(event)

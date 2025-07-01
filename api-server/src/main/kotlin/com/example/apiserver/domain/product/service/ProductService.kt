@@ -1,8 +1,9 @@
 package com.example.apiserver.domain.product.service
 
 import com.example.apiserver.domain.event.dto.ProductCreateEvent
-import com.example.apiserver.global.util.CursorPagingHelper
-import com.example.core.domain.product.dto.*
+import com.example.core.domain.product.dto.ProductCreateRequest
+import com.example.core.domain.product.dto.ProductIdResponse
+import com.example.core.domain.product.dto.ProductResponse
 import com.example.core.domain.product.repository.ProductDocumentRepository
 import com.example.core.domain.product.repository.ProductRepository
 import org.springframework.context.ApplicationEventPublisher
@@ -16,20 +17,6 @@ class ProductService(
     private val productDocumentRepository: ProductDocumentRepository,
     private val eventPublisher: ApplicationEventPublisher
 ) {
-
-    fun getProducts(cursorId: Long?, pageSize: Int = 20): CursorPageResponse<ProductResponse, Cursor> {
-        val products = productRepository.findWithCursor(cursorId, pageSize + 1)
-
-        val content = products.map(ProductResponse::from)
-
-        val cursorPage = CursorPagingHelper.getCursorPage(
-            content = content,
-            pageSize = pageSize,
-            { Cursor(it.productId) }
-        )
-
-        return cursorPage
-    }
 
     fun getTop10Products(): List<ProductResponse> {
         val top10Products = productDocumentRepository.findTop10ByOrderBySalesCountDescIdDesc()

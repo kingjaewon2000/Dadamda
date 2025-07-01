@@ -5,6 +5,7 @@ import com.example.core.domain.product.dto.ProductResponse
 import com.example.searchserver.domain.log.service.LogService
 import com.example.searchserver.domain.search.dto.ProductSearchRequest
 import com.example.searchserver.domain.search.strategy.ProductSearchStrategyFactory
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,10 +16,10 @@ class SearchService(
     private val strategyFactory: ProductSearchStrategyFactory<ProductDocument>,
 ) {
 
-    fun searchProducts(request: ProductSearchRequest): List<ProductResponse> {
+    fun searchProducts(request: ProductSearchRequest, pageable: Pageable): List<ProductResponse> {
         val strategy = strategyFactory.getStrategy(request.sortBy)
 
-        val products = strategy.search(request)
+        val products = strategy.search(request, pageable)
 
         logService.log(request.sortBy, request.keyword)
 

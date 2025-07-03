@@ -4,6 +4,7 @@ import com.example.core.domain.log.entity.ProductSort
 import com.example.core.domain.product.document.ProductDocument
 import com.example.core.domain.product.repository.ProductDocumentRepository
 import com.example.searchserver.domain.search.dto.ProductSearchRequest
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -16,7 +17,7 @@ class SearchEngineNewestProductStrategy(
 
     override fun getSortBy(): ProductSort = ProductSort.NEWEST
 
-    override fun search(request: ProductSearchRequest, pageable: Pageable): List<ProductDocument> {
+    override fun search(request: ProductSearchRequest, pageable: Pageable): Page<ProductDocument> {
         val sort = Sort.by(
             Sort.Order.desc("createdAt"),
             Sort.Order.desc("id")

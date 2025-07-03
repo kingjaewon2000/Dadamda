@@ -1,6 +1,7 @@
 package com.example.core.domain.product.repository
 
 import com.example.core.domain.product.document.ProductDocument
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.elasticsearch.annotations.Query
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
@@ -17,7 +18,7 @@ interface ProductDocumentRepository : ElasticsearchRepository<ProductDocument, S
         }
     """
     )
-    fun searchByName(keyword: String, pageable: Pageable): List<ProductDocument>
+    fun searchByName(keyword: String, pageable: Pageable): Page<ProductDocument>
 
     fun findTop10ByOrderBySalesCountDescIdDesc(): List<ProductDocument>
 

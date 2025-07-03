@@ -20,7 +20,7 @@ data class ProductResponse(
 
         fun from(product: ProductDocument): ProductResponse {
             return ProductResponse(
-                productId = product.id.toLong(),
+                productId = product.id,
                 name = product.name,
                 price = product.price
             )

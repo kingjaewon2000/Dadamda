@@ -31,8 +31,10 @@ class AutoCompleteSchedule(
     @Value("\${csv.export-path}")
     private lateinit var exportPath: String
 
-    private val CHUNK_SIZE = 1000
-    private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
+    companion object {
+        private const val CHUNK_SIZE = 1000
+        private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
+    }
 
     @Scheduled(cron = "0 * * * * *")
     @Transactional(readOnly = true)

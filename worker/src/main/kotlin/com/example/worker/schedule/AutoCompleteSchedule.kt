@@ -31,8 +31,10 @@ class AutoCompleteSchedule(
     @Value("\${csv.export-path}")
     private lateinit var exportPath: String
 
-    private val CHUNK_SIZE = 1000
-    private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
+    companion object {
+        private const val CHUNK_SIZE = 1000
+        private val KST_ZONE_ID = ZoneId.of("Asia/Seoul").toString()
+    }
 
     @Scheduled(cron = "0 * * * * *")
     @Transactional(readOnly = true)
@@ -61,9 +63,9 @@ class AutoCompleteSchedule(
         csvWriter.write(
             filePath = filePath,
             dataStream = logStream,
-            csvHeaders = arrayOf("log_id", "sort_by", "keyword", "length", "logged_at"),
+            csvHeaders = arrayOf("log_id", "sort_option", "keyword", "length", "logged_at"),
             dataExtractor = {
-                listOf(it.logId, it.sortBy.name, it.keyword, it.length, it.loggedAt)
+                listOf(it.logId, it.sortOption.name, it.keyword, it.length, it.loggedAt)
             }
         )
     }

@@ -1,9 +1,10 @@
 package com.example.searchserver.domain.search.strategy
 
-import com.example.core.domain.log.entity.ProductSort
+import com.example.core.domain.log.entity.SortOption
 import com.example.core.domain.product.entity.Product
 import com.example.core.domain.product.repository.ProductRepository
 import com.example.searchserver.domain.search.dto.ProductSearchRequest
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 
@@ -12,11 +13,12 @@ class BestSellingStrategy(
     private val productRepository: ProductRepository
 ) : ProductSearchStrategy<Product> {
 
-    override fun getSortBy(): ProductSort = ProductSort.BEST_SELLING
+    override fun getSortOption(): SortOption = SortOption.BEST_SELLING
 
-    override fun search(request: ProductSearchRequest, pageable: Pageable): List<Product> {
+    override fun search(request: ProductSearchRequest, pageable: Pageable): Page<Product> {
         return productRepository.findBestSelling(
             keyword = request.keyword,
+            pageable = pageable,
         )
     }
 

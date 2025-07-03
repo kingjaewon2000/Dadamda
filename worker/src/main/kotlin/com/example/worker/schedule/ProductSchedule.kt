@@ -42,9 +42,11 @@ class ProductSchedule(
     @Value("\${csv.export-path}")
     private lateinit var exportPath: String
 
-    private val PRODUCT_INDEX_NAME = "product"
-    private val PRODUCT_ALIAS = "product_alias"
-    private val CHUNK_SIZE = 1000
+    companion object {
+        private const val PRODUCT_INDEX_NAME = "product"
+        private const val PRODUCT_ALIAS = "product_alias"
+        private const val CHUNK_SIZE = 1000
+    }
 
     @Scheduled(cron = "0 * * * * *")
     @Transactional(readOnly = true)

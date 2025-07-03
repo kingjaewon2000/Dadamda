@@ -18,11 +18,11 @@ class SearchService(
 ) {
 
     fun searchProducts(request: ProductSearchRequest, pageable: Pageable): Page<ProductResponse> {
-        val strategy = strategyFactory.getStrategy(request.sortBy)
+        val strategy = strategyFactory.getStrategy(request.sortOption)
 
         val products = strategy.search(request, pageable)
 
-        logService.log(request.sortBy, request.keyword)
+        logService.log(request.sortOption, request.keyword)
 
         return products.map(ProductResponse::from)
     }

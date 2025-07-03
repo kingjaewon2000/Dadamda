@@ -11,9 +11,14 @@ class ElasticsearchAutoCompleteService(
     private val autocompleteRepository: AutoCompleteRepository,
 ) : AutoCompleteService {
 
+    companion object {
+        private const val PAGE_NUMBER = 0
+        private const val PAGE_SIZE = 10
+    }
+
     override fun getSuggestions(query: String): List<AutoCompleteResponse> {
-        val sort = Sort.by(Sort.Direction.DESC, "frequency")
-        val pageable = PageRequest.of(0, 10, sort)
+        val sortOption = Sort.by(Sort.Direction.DESC, "frequency")
+        val pageable = PageRequest.of(PAGE_NUMBER, PAGE_SIZE, sortOption)
         val searchResults = autocompleteRepository.findBySuggestWithPageable(query, pageable)
 
         return searchResults.map { AutoCompleteResponse(it.keyword) }

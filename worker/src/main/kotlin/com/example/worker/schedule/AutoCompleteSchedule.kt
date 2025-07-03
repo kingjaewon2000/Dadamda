@@ -61,9 +61,9 @@ class AutoCompleteSchedule(
         csvWriter.write(
             filePath = filePath,
             dataStream = logStream,
-            csvHeaders = arrayOf("log_id", "sort_by", "keyword", "length", "logged_at"),
+            csvHeaders = arrayOf("log_id", "sort_option", "keyword", "length", "logged_at"),
             dataExtractor = {
-                listOf(it.logId, it.sortBy.name, it.keyword, it.length, it.loggedAt)
+                listOf(it.logId, it.sortOption.name, it.keyword, it.length, it.loggedAt)
             }
         )
     }

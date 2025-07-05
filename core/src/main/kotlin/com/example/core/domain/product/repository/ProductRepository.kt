@@ -12,20 +12,12 @@ import java.util.stream.Stream
 
 interface ProductRepository : JpaRepository<Product, Long> {
 
-    @Query(
-        "SELECT p FROM Product p " +
-                "WHERE :cursorId is NULL OR p.productId < :cursorId " +
-                "ORDER BY p.productId DESC " +
-                "LIMIT :pageSize"
-    )
-    fun findWithCursor(cursorId: Long?, pageSize: Int): List<Product>
-
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Product p where p.productId = :productId")
     fun findByIdForUpdate(productId: Long): Product?
 
     /*
-        검색용 쿼리
+     *  검색용 쿼리
      */
     @Query(
         value = "SELECT p FROM Product p WHERE p.name Like %:keyword% ORDER BY p.productId DESC",
@@ -44,7 +36,7 @@ interface ProductRepository : JpaRepository<Product, Long> {
     fun findBestSelling(keyword: String, pageable: Pageable): Page<Product>
 
     /*
-        배치용 쿼리
+     *  배치용 쿼리
      */
     @Query(
         """

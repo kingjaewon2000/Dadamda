@@ -1,4 +1,4 @@
-package com.example.core.domain.product.dto
+package com.example.apiserver.domain.product.dto
 
 data class ProductIdResponse(
     val productId: Long

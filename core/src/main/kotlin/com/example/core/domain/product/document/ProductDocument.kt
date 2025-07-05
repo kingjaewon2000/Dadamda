@@ -11,20 +11,8 @@ class ProductDocument(
     @Field(type = FieldType.Long)
     val id: Long,
 
-    @MultiField(
-        mainField = Field(type = FieldType.Text, analyzer = "korean_analyzer"),
-        otherFields = [
-            InnerField(
-                suffix = "ngram",
-                type = FieldType.Text,
-                analyzer = "ngram_analyzer"
-            )
-        ]
-    )
-    val name: String,
-
-    @Field(type = FieldType.Integer)
-    val price: Int,
+    name: String,
+    price: Int,
 
     @Field(type = FieldType.Integer)
     val stockQuantity: Int,
@@ -36,4 +24,30 @@ class ProductDocument(
     // 신규 상품 순 정렬을 위한 필드
     @Field(type = FieldType.Date, format = [DateFormat.date_hour_minute_second_millis, DateFormat.epoch_millis])
     val createdAt: LocalDateTime
-)
+) {
+
+    @MultiField(
+        mainField = Field(type = FieldType.Text, analyzer = "korean_analyzer"),
+        otherFields = [
+            InnerField(
+                suffix = "ngram",
+                type = FieldType.Text,
+                analyzer = "ngram_analyzer"
+            )
+        ]
+    )
+    var name: String = name
+        private set
+
+    @Field(type = FieldType.Integer)
+    var price: Int = price
+        private set
+
+    fun updateInfo(name: String, price: Int) {
+        require(price > 0) { "상품 가격은 0보다 커야 합니다." }
+
+        this.name = name
+        this.price = price
+    }
+
+}

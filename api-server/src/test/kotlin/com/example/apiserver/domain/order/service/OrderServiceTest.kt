@@ -88,7 +88,7 @@ class OrderServiceTest {
 
             assertThatThrownBy { orderService.createOrder(request) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("상품의 수량이 0 이하일 수 없습니다.")
+                .hasMessage("감소시킬 재고 수량은 0보다 커야 합니다.")
         }
 
         @Test
@@ -112,7 +112,7 @@ class OrderServiceTest {
 
             assertThatThrownBy { orderService.createOrder(request) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("상품의 수량이 0 이하일 수 없습니다.")
+                .hasMessage("감소시킬 재고 수량은 0보다 커야 합니다.")
         }
 
         @Test

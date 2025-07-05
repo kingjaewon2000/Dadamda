@@ -1,6 +1,6 @@
 package com.example.apiserver.domain.product.service
 
-import com.example.core.domain.product.dto.ProductCreateRequest
+import com.example.apiserver.domain.product.dto.ProductCreateRequest
 import com.example.core.domain.product.entity.Product
 import com.example.core.domain.product.repository.ProductDocumentRepository
 import com.example.core.domain.product.repository.ProductRepository

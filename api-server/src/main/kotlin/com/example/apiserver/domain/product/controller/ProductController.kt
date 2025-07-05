@@ -1,8 +1,9 @@
 package com.example.apiserver.domain.product.controller
 
+import com.example.apiserver.domain.product.dto.ProductCreateRequest
+import com.example.apiserver.domain.product.dto.ProductIdResponse
+import com.example.apiserver.domain.product.dto.ProductUpdateRequest
 import com.example.apiserver.domain.product.service.ProductService
-import com.example.core.domain.product.dto.ProductCreateRequest
-import com.example.core.domain.product.dto.ProductIdResponse
 import com.example.core.domain.product.dto.ProductResponse
 import com.example.core.global.dto.ApiResponse
 import org.springframework.web.bind.annotation.*
@@ -21,6 +22,14 @@ class ProductController(
     @PostMapping
     fun createProduct(@RequestBody request: ProductCreateRequest): ApiResponse<ProductIdResponse> {
         return ApiResponse.create(productService.createProduct(request))
+    }
+
+    @PutMapping("/{productId}")
+    fun updateProduct(
+        @PathVariable productId: Long,
+        @RequestBody request: ProductUpdateRequest
+    ): ApiResponse<ProductIdResponse> {
+        return ApiResponse.success(productService.updateProduct(productId, request))
     }
 
 }

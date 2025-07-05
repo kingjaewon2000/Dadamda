@@ -1,6 +1,7 @@
 package com.example.apiserver.domain.product.service
 
 import com.example.apiserver.domain.event.dto.ProductCreateEvent
+import com.example.apiserver.domain.event.dto.ProductUpdateEvent
 import com.example.apiserver.domain.product.dto.ProductCreateRequest
 import com.example.apiserver.domain.product.dto.ProductIdResponse
 import com.example.apiserver.domain.product.dto.ProductUpdateRequest
@@ -52,6 +53,14 @@ class ProductService(
             name = request.name,
             price = request.price,
         )
+
+        val updateEvent = ProductUpdateEvent(
+            productId = product.productId,
+            name = request.name,
+            price = request.price,
+        )
+
+        eventPublisher.publishEvent(updateEvent)
 
         return ProductIdResponse(product.productId)
     }

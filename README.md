@@ -4,6 +4,16 @@
 ## 기술 스택
 `Kotlin`, `Spring boot 3.5.0`, `MySQL 8.4`, `Elasticsearch 8.13.4`
 
+## 데모
+### 검색어 자동완성
+<img src="https://github.com/user-attachments/assets/dfce5914-35fe-423e-bba3-c235731e5664" width="70%">
+
+### 판매량순
+<img src="https://github.com/user-attachments/assets/920f5060-2c0c-41bd-85aa-f47bd9028a9f" width="70%">
+
+### 신상품순
+<img src="https://github.com/user-attachments/assets/31ccb276-ed86-4e4a-81ec-1230909acdaf" width="70%">
+
 ## 이런 문제를 고민했어요!
 >다담다 프로젝트는 많은 쇼핑몰에서 기본적으로 제공하는 `검색`, `검색어 자동완성` 기능에서 발생하는 문제를 고민했습니다. 
 

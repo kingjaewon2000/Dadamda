@@ -21,16 +21,18 @@
 - 문제1. 사용자가 판매량 순으로 상품을 조회할 때마다 상품의 판매량을 집계하고 정렬한다. 이 방식은 데이터가 많아질수록 서버에 심각한 부하를 줌
 - 문제2. **LIKE '%라면%'** 검색은 name 컬럼의 인덱스를 활용하지 못하고 풀 스캔(Full Scan) 수행
 - 문제3. LIKE 검색은 오타, 띄어쓰기, 동의어 등을 처리하지 못하고 검색어의 중요도를 반영한 정렬도 불가능
-![검색 (판매량 순 정렬) 초기 아키텍처](https://github.com/user-attachments/assets/76f7c3ed-03b6-464c-886d-3660b52a6fab)
+
+![검색 (판매량 순 정렬) 초기 아키텍처](docs/images/search-initial-architecture.png)
 
 ### 검색어 자동완성
 - 문제1. **LIKE '%라면%'** 검색은 query 컬럼의 인덱스를 활용하지 못하고 풀 스캔(Full Scan) 수행
 - 문제2. 검색어 자동완성 기능은 응답속도에 민감한 기능이지만 현재 구조에서는 데이터가 늘어나면 심각한 성능저하가 발생
-![검색어 자동완성 초기 아키텍처](https://github.com/user-attachments/assets/ede09b37-7058-4094-aaf2-aaaf06abd4a5)
+
+![검색어 자동완성 초기 아키텍처](docs/images/autocomplete-initial-architecture.png)
 
 ## 아키텍처
 ### 검색 (판매량 순)
-![검색 아키텍처](https://github.com/user-attachments/assets/23e15077-bb56-4132-a622-a209c6e20429)
+![검색 아키텍처](docs/images/product-search-architecture.png)
 ### 상품 등록 아키텍처
 1. 판매자가 상품 서버에 상품 등록을 요청한다.
 2. 상품 서버는 사용자의 요청을 받아 MYSQL에 상품 데이터를 저장한다.
@@ -42,7 +44,7 @@
 3. 엘라스틱서치에 검색한 상품 목록을 사용자에게 응답한다.
 --- 
 ### 검색어 자동완성
-![검색 시 로그데이터 저장 아키텍처](https://github.com/user-attachments/assets/87ba48e5-da84-4c41-9c0e-e2634b760981)
+![검색 시 로그데이터 저장 아키텍처](docs/images/search-log-architecture.png)
 1. 사용자가 검색 서버에'신라면'을 검색한다.
 2. 검색 서버는 사용자에게 상품 데이터를 반환하고, 검색어 로그 메시지를 발행한다.
 3. 컨슈머 서버는 발행된 검색어 로그를 배치 단위로 가져온다.

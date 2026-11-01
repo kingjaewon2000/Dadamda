@@ -21,12 +21,14 @@
 - 문제1. 사용자가 판매량 순으로 상품을 조회할 때마다 상품의 판매량을 집계하고 정렬한다. 이 방식은 데이터가 많아질수록 서버에 심각한 부하를 줌
 - 문제2. **LIKE '%라면%'** 검색은 name 컬럼의 인덱스를 활용하지 못하고 풀 스캔(Full Scan) 수행
 - 문제3. LIKE 검색은 오타, 띄어쓰기, 동의어 등을 처리하지 못하고 검색어의 중요도를 반영한 정렬도 불가능
-![검색 (판매량 순 정렬) 초기 아키텍처](https://github.com/user-attachments/assets/76f7c3ed-03b6-464c-886d-3660b52a6fab)
+
+![검색 (판매량 순 정렬) 초기 아키텍처](docs/images/search-initial-architecture.png)
 
 ### 검색어 자동완성
 - 문제1. **LIKE '%라면%'** 검색은 query 컬럼의 인덱스를 활용하지 못하고 풀 스캔(Full Scan) 수행
 - 문제2. 검색어 자동완성 기능은 응답속도에 민감한 기능이지만 현재 구조에서는 데이터가 늘어나면 심각한 성능저하가 발생
-![검색어 자동완성 초기 아키텍처](https://github.com/user-attachments/assets/ede09b37-7058-4094-aaf2-aaaf06abd4a5)
+
+![검색어 자동완성 초기 아키텍처](docs/images/autocomplete-initial-architecture.png)
 
 ## 아키텍처
 ### 검색 (판매량 순)
